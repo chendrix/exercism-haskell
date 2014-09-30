@@ -5,8 +5,10 @@ where
   toRNA = map nucleotideToRNA
   
   nucleotideToRNA :: Char -> Char
-  nucleotideToRNA 'G' = 'C'
-  nucleotideToRNA 'C' = 'G'
-  nucleotideToRNA 'T' = 'A'
-  nucleotideToRNA 'A' = 'U'
-  nucleotideToRNA _ = error "Unknown DNA Nucleotide"
+  nucleotideToRNA n = 
+    case n of
+      'G' -> 'C'
+      'C' -> 'G'
+      'T' -> 'A'
+      'A' -> 'U'
+      _   -> error "Unknown DNA Nucleotide"
