@@ -3,4 +3,4 @@ module DNA
 ) where
   
   hammingDistance :: String -> String -> Int
-  hammingDistance a b = length . filter (uncurry (/=)) $ zip a b
+  hammingDistance a b = length $ filter id $ zipWith (/=) a b
