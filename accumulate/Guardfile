@@ -1,0 +1,7 @@
+guard :shell do
+  watch /(.*).hs$/ do |m|
+    puts "-[ Testing #{m[0]} ]-----------------------------"
+    
+    `runhaskell #{Dir["*_test.hs"].first}`
+  end
+end
