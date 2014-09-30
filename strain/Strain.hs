@@ -10,7 +10,4 @@ module Strain
     | otherwise   = keep predicate xs
     
   discard :: (a -> Bool) -> [a] -> [a]
-  discard _ [] = []
-  discard predicate (x:xs) 
-    | not $ predicate x = x : discard predicate xs
-    | otherwise         = discard predicate xs
+  discard predicate = keep (not . predicate)
