@@ -5,10 +5,11 @@ module Phone
 ) where
 
 import Data.Char
+import Text.Printf
 
 prettyPrint :: String -> String
 prettyPrint unformattedNumber = 
-  "(" ++ area ++ ") " ++ first ++ "-" ++ second
+  printf "(%s) %s-%s" area first second
   where area   = areaCode unformattedNumber
         first  = firstPart unformattedNumber
         second = secondPart unformattedNumber
@@ -24,9 +25,11 @@ secondPart phoneNumber = drop 3 $ drop 3 $ number phoneNumber
 
 number :: String -> String
 number str 
- | len == 11 && first == '1' = drop 1 digits
- | len == 10 = digits
+ | validWithTrunkCode = tail digits
+ | validWithoutTrunkCode = digits
  | otherwise = "0000000000"
  where digits = filter isDigit str
-       len    = length digits
+       len = length digits
        first  = head digits
+       validWithTrunkCode = len == 11 && first == '1'
+       validWithoutTrunkCode = len == 10
