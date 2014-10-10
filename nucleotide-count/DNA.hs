@@ -3,20 +3,21 @@ module DNA
 , count
 ) where
 
-import qualified Data.Map as Map
+import qualified Data.Map.Strict as Map
+import Data.List (foldl')
 
 type Nucleotide = Char
 type Frequency = Int
 type NucleotideCount = Map.Map Nucleotide Frequency
 
 nucleotideCounts :: String -> NucleotideCount
-nucleotideCounts = foldl increaseFrequency emptyNucleotidesCount
+nucleotideCounts = foldl' increaseFrequency emptyNucleotidesCount
 
 increaseFrequency :: NucleotideCount -> Nucleotide -> NucleotideCount
 increaseFrequency freqs nucleotide = Map.insertWith (+) nucleotide 1 freqs
 
 emptyNucleotidesCount :: NucleotideCount
-emptyNucleotidesCount = Map.fromList $ zip nucleotides [0,0..]
+emptyNucleotidesCount = Map.fromList $ zip nucleotides $ repeat 0
 
 nucleotides :: String
 nucleotides = "ACTG"
