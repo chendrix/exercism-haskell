@@ -17,12 +17,13 @@ ageOn planet seconds = fromIntegral seconds / secondsPerYear planet
 
 secondsPerYear :: Planet -> Float
 secondsPerYear planet =
-  case planet of
-    Earth   -> 31557600
-    Mercury -> 0.2408467  * secondsPerYear Earth
-    Venus   -> 0.61519726 * secondsPerYear Earth
-    Mars    -> 1.8808158  * secondsPerYear Earth
-    Jupiter -> 11.862615  * secondsPerYear Earth
-    Saturn  -> 29.447498  * secondsPerYear Earth
-    Uranus  -> 84.016846  * secondsPerYear Earth
-    Neptune -> 164.79132  * secondsPerYear Earth
+  31557600 
+  * case planet of
+      Earth   -> 1
+      Mercury -> 0.2408467
+      Venus   -> 0.61519726
+      Mars    -> 1.8808158
+      Jupiter -> 11.862615
+      Saturn  -> 29.447498
+      Uranus  -> 84.016846
+      Neptune -> 164.79132
