@@ -2,7 +2,6 @@ module Robot
 ( robotName
 , mkRobot
 , resetName
-, randomName
 ) where
 
 import Data.IORef
@@ -24,7 +23,7 @@ randomName = do
   let randomChars = randomRs ('A', 'Z') g
       randomNumbers = randomRs (0, 9) h :: [Int]
       twoChars = take 2 randomChars
-      threeDigitString = foldr ((:) . intToDigit) [] (take 3 randomNumbers)
+      threeDigitString = map intToDigit $ take 3 randomNumbers
   return $ twoChars ++ threeDigitString 
 
 robotName :: IORef Robot -> IO Name
