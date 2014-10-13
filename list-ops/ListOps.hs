@@ -13,32 +13,28 @@ import Prelude hiding
   ( length, reverse, map, filter, foldr, (++), concat )
 
 foldl' :: (b -> a -> b) -> b -> [a] -> b
-foldl' g = foldr (flip g)
+foldl' g z [] = z
+foldl' g z (x:xs) = let z' = z `g` x
+                    in seq z' $ foldl' g z' xs
 
 foldr :: (a -> b -> b) -> b -> [a] -> b
 foldr g z [] = z
-foldr g z (x:xs) = x `g` foldr g z xs 
+foldr g z (x:xs) = x `g` foldr g z xs
 
 length :: [a] -> Int
-length = foldr (\x -> (+) 1) 0 
+length = foldl' (\n _ -> n + 1) 0 
 
 reverse :: [a] -> [a]
-reverse [] = []
-reverse (x:xs) = reverse xs ++ [x]
+reverse = foldl' (flip (:)) []
 
 map :: (a -> b) -> [a] -> [b]
-map _ [] = []
-map g (x:xs) = g x : map g xs
+map g = foldr ((:) . g) []
 
 filter :: (a -> Bool) -> [a] -> [a]
-filter _ [] = []
-filter g (x:xs) 
-  | g x = x : filter g xs
-  | otherwise = filter g xs
+filter p = foldr (\x xs -> if p x then x:xs else xs) []
 
 (++) :: [a] -> [a] -> [a]
-[] ++ ys = ys
-(x:xs) ++ ys = x : (xs ++ ys)
+(++) xs ys = foldr (:) ys xs
 
 concat :: [[a]] -> [a]
 concat = foldr (++) []
